@@ -1,0 +1,33 @@
+{
+  "name": "collection",
+  "version": "1.0.0",
+  "description": "This module is an utility for managing data in the form of Map.",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:typing": "tsc --build tsconfig.typing.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Smaug6739/collection.git"
+  },
+  "keywords": [
+    "collection",
+    "map",
+    "data",
+    "util"
+  ],
+  "author": "Smaug6739",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Smaug6739/collection/issues"
+  },
+  "homepage": "https://github.com/Smaug6739/collection#readme",
+  "devDependencies": {
+    "@types/node": "^16.4.13"
+  }
+}
