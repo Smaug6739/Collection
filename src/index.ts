@@ -15,6 +15,9 @@ class Collection<K, V> extends Map<K, V> {
 	public static readonly default: typeof Collection = Collection;
 	public ['constructor']: CollectionConstructor;
 
+	constructor(data?: any) {
+		super(data)
+	}
 
 	public get(key: K) {
 		return super.get(key)
@@ -181,7 +184,8 @@ class Collection<K, V> extends Map<K, V> {
 		return newArray;
 	}
 	public toJSON() {
-		return [...this.values()]
+		const obj = Object.fromEntries(this);
+		return obj
 	}
 
 	public each(fn: (value: V, key: K, collection: this) => void, thisArg?: unknown): this {
@@ -189,3 +193,4 @@ class Collection<K, V> extends Map<K, V> {
 		return this;
 	}
 }
+export { Collection }
