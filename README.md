@@ -34,9 +34,7 @@ Parameters :
 
 Returns :
 
-The value of the key in the collection.
-
-Type : any
+The value of the key in the collection (type : `any`).
 
 ```js
 collection.get("key1");
@@ -53,15 +51,13 @@ Parameters :
 
 Returns :
 
-The Map object.
-
-Type : object
+The Collection (type : `Collection`).
 
 ```js
 collection.set("key2", value2);
 ```
 
-## hasKey(key)
+## has(key)
 
 Check if a key exists in the collection.
 
@@ -71,12 +67,10 @@ Parameters :
 
 Returns :
 
-True if the key exists in the collection.
-
-Type : boolean
+True if the key exists in the collection (type : `boolean`).
 
 ```js
-collection.hasKey("key1"); // true
+collection.has("key1"); // true
 ```
 
 ## hasAllKeys(keys)
@@ -89,9 +83,7 @@ Parameters :
 
 Returns :
 
-True if the keys exists in the collection.
-
-Type : boolean
+True if the keys exists in the collection (type : `boolean`).
 
 ```js
 collection.hasAllKeys(["key1", "key2"]);
@@ -107,9 +99,7 @@ Parameters :
 
 Returns :
 
-True if one key exists in the collection.
-
-Type : boolean
+True if one key exists in the collection (type : `boolean`).
 
 ```js
 collection.hasAnyKey(["key1", "key2"]);
@@ -125,9 +115,7 @@ Parameters :
 
 Returns :
 
-The value of the key in the collection.
-
-Type : any
+True if the key was deleted (type : `boolean`).
 
 ```js
 collection.delete("key1");
@@ -143,9 +131,7 @@ None
 
 Returns :
 
-Undefined.
-
-Type : undefined
+Undefined (type : `undefined`).
 
 ```js
 collection.clear();
@@ -162,9 +148,7 @@ Parameters :
 
 Returns :
 
-Undefined
-
-Type : undefined
+The collection if it was updated and null otherwise (type : `null`|`Collection`).
 
 ```js
 const filter = (k, v) => k === "key1";
@@ -182,9 +166,7 @@ Parameters :
 
 Returns :
 
-Undefined
-
-Type : undefined
+The collection if data was deleted and null otherwise (type : `null`|`Collection`).
 
 ```js
 const filter = (k, v) => k === "key1";
@@ -201,30 +183,10 @@ Parameters :
 
 Returns :
 
-True if value of this item is unique in the collection.
-
-Type : boolean
+True if value of this item is unique in the collection (type : `boolean`).
 
 ```js
 collection.isUnique("key1");
-```
-
-## first()
-
-Get the first element of the collection.
-
-Parameters :
-
-None
-
-Returns :
-
-The value of the first element in the collection.
-
-Type : any
-
-```js
-collection.first();
 ```
 
 ## firstKey()
@@ -237,17 +199,15 @@ None
 
 Returns :
 
-The key of the first element in the collection.
-
-Type : string
+The key of the first element in the collection (type : `any`).
 
 ```js
 collection.firstKey();
 ```
 
-## last()
+## first()
 
-Get the last element of the collection.
+Get the first element of the collection.
 
 Parameters :
 
@@ -255,12 +215,10 @@ None
 
 Returns :
 
-The value of the last element in the collection.
-
-Type : any
+The value of the first element in the collection (type : `any`).
 
 ```js
-collection.last();
+collection.first();
 ```
 
 ## lastKey()
@@ -273,12 +231,26 @@ None
 
 Returns :
 
-The key of the last element in the collection.
-
-Type : string
+The key of the last element in the collection (type : `any`).
 
 ```js
 collection.lastKey();
+```
+
+## last()
+
+Get the last element of the collection.
+
+Parameters :
+
+None
+
+Returns :
+
+The value of the last element in the collection (type : `any`).
+
+```js
+collection.last();
 ```
 
 ## randomKey()
@@ -291,9 +263,7 @@ None
 
 Returns :
 
-The random key of the collection.
-
-Type : string
+The random key of the collection (type : `any`).
 
 ```js
 collection.randomKey();
@@ -309,9 +279,7 @@ None
 
 Returns :
 
-The random value of the collection.
-
-Type : string
+The random value of the collection (type : `any`).
 
 ```js
 collection.random();
@@ -327,12 +295,10 @@ Parameters :
 
 Returns :
 
-The values.
-
-Type : any
+The value found (type : `any`).
 
 ```js
-collection.find((v) => (v.property = value));
+collection.find((v) => v.property == value);
 ```
 
 ## isEmpty()
@@ -345,9 +311,7 @@ None
 
 Returns :
 
-True if the collection is empty.
-
-Type : boolean
+True if the collection is empty (type : `boolean`).
 
 ```js
 collection.isEmpty();
@@ -363,9 +327,7 @@ None
 
 Returns :
 
-The collection.
-
-Type : any
+The collection copied (type : `Collection`).
 
 ```js
 collection.copy();
@@ -381,13 +343,11 @@ Parameters :
 
 Returns :
 
-The values.
-
-Type : any
+A collection with the items filtered (type : `Collection`).
 
 ```js
 collection.filter((v, k) => {
-  v.property === other;
+  return v.property === other;
 });
 ```
 
@@ -401,9 +361,7 @@ None
 
 Returns :
 
-An arrays of keys of the collection.
-
-Type : Array\<string>
+An arrays of keys of the collection (type : `Array<any>`).
 
 ```js
 collection.keysList();
@@ -419,9 +377,7 @@ None
 
 Returns :
 
-An arrays of values of the collection.
-
-Type : Array\<string>
+An arrays of values of the collection (type : `Array<any>`).
 
 ```js
 collection.valuesList();
@@ -437,9 +393,7 @@ Parameters :
 
 Returns :
 
-The new collection merged
-
-Type : Collection
+The new collection merged (type : `Collection`).
 
 ```js
 collection.merge(other);
@@ -457,12 +411,10 @@ None
 
 Returns :
 
-Undefined
-
-Type : undefined
+Undefined (type : `undefined`)
 
 ```js
-collection.valuesList();
+collection.concat(other);
 ```
 
 ## toArray()
@@ -475,15 +427,13 @@ None
 
 Returns :
 
-An arrays of the collection.
-
-Type : Array\<{key:string, value:any}>
+An arrays of the collection (type : `Array<{key:string, value:any}>`).
 
 ```js
 collection.toArray();
 ```
 
-## toJson()
+## toJSON()
 
 Convert the collection to json.
 
@@ -493,10 +443,8 @@ None
 
 Returns :
 
-The collection as json.
-
-Type : Json
+The collection as json (type : `Object`).
 
 ```js
-collection.toJson();
+collection.toJSON();
 ```

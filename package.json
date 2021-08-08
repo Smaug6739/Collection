@@ -1,8 +1,9 @@
 {
-  "name": "collection",
+  "name": "collection-data",
   "version": "1.0.0",
   "description": "This module is an utility for managing data in the form of Map.",
   "main": "lib/index.js",
+  "types":"./typing/index.d.ts",
   "directories": {
     "lib": "lib",
     "test": "test"
@@ -17,9 +18,11 @@
   },
   "keywords": [
     "collection",
+    "list",
     "map",
     "data",
-    "util"
+    "util",
+    "data-structure"
   ],
   "author": "Smaug6739",
   "license": "MIT",

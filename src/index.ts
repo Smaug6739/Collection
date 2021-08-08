@@ -27,13 +27,13 @@ class Collection<K, V> extends Map<K, V> {
 		return super.set(key, value)
 	}
 
-	public hasKey(key: K) {
+	public has(key: K) {
 		return super.has(key)
 	}
-	public hasAllKeys(...keys: K[]): boolean {
-		return keys.every(k => this.hasKey(k));
+	public hasAllKeys(keys: K[]): boolean {
+		return keys.every(k => this.has(k));
 	}
-	public hasAnyKey(...keys: K[]): boolean {
+	public hasAnyKey(keys: K[]): boolean {
 		return keys.some((k) => this.has(k));
 	}
 	public delete(key: K) {
@@ -49,31 +49,30 @@ class Collection<K, V> extends Map<K, V> {
 		if (!filter) throw new TypeError('[MISSING_PARAMETER] The filter parameter must be specified.');
 		for (const [k, v] of this) {
 			if (filter(k, v)) {
-				this.set(data.key, data.value)
-				break;
+				return this.set(data.key, data.value)
 			}
 		}
-
+		return null;
 	}
 	public deleteIf(key: K, filter: Function) {
 		if (!key) throw new TypeError('[MISSING_PARAMETER] The key parameter must be specified with key and value property.');
 		if (!filter) throw new TypeError('[MISSING_PARAMETER] The filter parameter must be specified.');
-		if (filter(this.toArray())) {
-			this.delete(key)
+		for (const [k, v] of this) {
+			if (filter(k, v)) {
+				if (this.delete(key)) return this
+			}
 		}
+		return null;
 	}
 	public isUnique(key: K) {
-		// Return true if the collection does not contain this value has another place
 		const valOne = this.get(key);
 		if (!valOne) throw new TypeError('Cannot find value for key: ' + key);
-		for (const val of this.values()) {
-			if (val === valOne) return false;
-		}
-		return true;
-	}
-	public first() {
-		if (this.values().next().value) return this.values().next().value;
-		return null;
+		// for (const val of this.filter()) {
+		// 	if (val === valOne) return false;
+		// }
+
+		if (this.filter((v: V) => v === valOne).size <= 1) return true
+		return false;
 	}
 	public firstKey(): K | null {
 		const firstKey = this.keys().next().value;
@@ -81,14 +80,18 @@ class Collection<K, V> extends Map<K, V> {
 		return null;
 	}
 
-	public last() {
-		const arr = [...this.values()];
-		if (arr[arr.length - 1]) return arr[arr.length - 1];
+	public first() {
+		if (this.values().next().value) return this.values().next().value;
 		return null;
 	}
 
 	public lastKey(): K | null {
 		const arr = [...this.keys()];
+		if (arr[arr.length - 1]) return arr[arr.length - 1];
+		return null;
+	}
+	public last() {
+		const arr = [...this.values()];
 		if (arr[arr.length - 1]) return arr[arr.length - 1];
 		return null;
 	}
@@ -123,12 +126,12 @@ class Collection<K, V> extends Map<K, V> {
 		return new this.constructor[Symbol.species](this);
 	}
 
-	filter(f: Function) {
-		const newCollection = new Collection();
+	filter(f: Function): Collection<K, V> {
+		const newCollection = new this.constructor[Symbol.species]<K, V>();
 		for (const [k, v] of this) {
-			if (f(v, k)) newCollection.set(k, v)
+			if (f(v, k)) { newCollection.set(k, v); console.log('OK') }
 		}
-		return true;
+		return newCollection;
 	}
 
 
