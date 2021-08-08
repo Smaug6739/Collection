@@ -1,4 +1,8 @@
-import type { IMap } from './typescript/interfaces';
+/**
+ * This module is an utility for managing data in the form of Map.
+ * github.com/Smaug6739/collection
+ */
+import type { IMap, IArray } from './typescript/interfaces';
 export interface CollectionConstructor {
     new (): Collection<unknown, unknown>;
     new <K, V>(entries?: ReadonlyArray<readonly [K, V]> | null): Collection<K, V>;
@@ -9,32 +13,33 @@ export interface CollectionConstructor {
 declare class Collection<K, V> extends Map<K, V> {
     static readonly default: typeof Collection;
     ['constructor']: CollectionConstructor;
-    get(key: K): V;
+    constructor(data?: any);
+    get(key: K): V | undefined;
     set(key: K, value: V): this;
-    hasKey(key: K): boolean;
-    hasAllKeys(...keys: K[]): boolean;
-    hasAnyKey(...keys: K[]): boolean;
+    has(key: K): boolean;
+    hasAllKeys(keys: K[]): boolean;
+    hasAnyKey(keys: K[]): boolean;
     delete(key: K): boolean;
     clear(): void;
-    updateIf(data: IMap, filter: Function): void;
-    deleteIf(key: K, filter: Function): void;
+    updateIf(data: IMap, filter: Function): this | null;
+    deleteIf(key: K, filter: Function): this | null;
     isUnique(key: K): boolean;
-    first(): any;
     firstKey(): K | null;
-    last(): V;
+    first(): V | null;
     lastKey(): K | null;
-    randomKey(): K;
-    random(): V;
-    find(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): V | undefined;
+    last(): V | null;
+    randomKey(): K | null;
+    random(): V | null;
+    find(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): V | null;
     isEmpty(): boolean;
     copy(): Collection<K, V>;
-    filter(f: Function): boolean;
-    keysList(): K[];
-    valuesList(): V[];
-    merge(...maps: Array<Collection<K, V> | Map<K, V>>): this;
+    filter(f: Function): Collection<K, V>;
+    keysList(): K[] | null;
+    valuesList(): V[] | null;
+    merge(...maps: Array<Collection<K, V> | Map<K, V>>): Collection<K, V>;
     concat(...maps: Array<Collection<K, V> | Map<K, V>>): Collection<K, V>;
-    toArray(): any[] | this;
-    toJSON(): V[];
+    toArray(): Array<IArray> | null;
+    toJSON(): any;
     each(fn: (value: V, key: K, collection: this) => void, thisArg?: unknown): this;
 }
-export {};
+export { Collection };

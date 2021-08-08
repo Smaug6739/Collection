@@ -2,7 +2,41 @@
 
 This module is an utility for managing data in the form of Map.
 
+## Getting Started
+
+Prerequisites :
+
+Node.js 12.0.0 or newer is required.
+
+### Instalation
+
+With npm :
+
+```sh-session
+npm install collection-data
+```
+
+With yarn :
+
+```sh-session
+yarn add collection-data
+```
+
 ## Usage
+
+Import the module from node_modules :
+
+With CommonJS syntax :
+
+```js
+const { Collection } = require("collection-data");
+```
+
+With module syntax :
+
+```js
+import { Collection } = from 'collection-data';
+```
 
 Create a new Collection with optional data has a parameter.
 
@@ -20,33 +54,29 @@ const collection = new Collection([
 ]);
 ```
 
-## Methods
-
----
-
-## get(key)
+## Collection#get(key)
 
 Get a value from the collection by name of key.
 
 Parameters :
 
-- key : The name of the key to get value from the collection (string).
+- key : The name of the key to get value from the collection (any).
 
 Returns :
 
-The value of the key in the collection (type : `any`).
+The value of the key in the collection (type : `any` | `undefined`).
 
 ```js
 collection.get("key1");
 ```
 
-## set(key, value)
+## Collection#set(key, value)
 
 Set a value in the collection.
 
 Parameters :
 
-- key : The name of the key to add (string).
+- key : The name of the key to add (any).
 - value : The value to set (any).
 
 Returns :
@@ -57,13 +87,13 @@ The Collection (type : `Collection`).
 collection.set("key2", value2);
 ```
 
-## has(key)
+## Collection#has(key)
 
 Check if a key exists in the collection.
 
 Parameters :
 
-- key : The key to check.
+- key : The key to check (any).
 
 Returns :
 
@@ -73,13 +103,13 @@ True if the key exists in the collection (type : `boolean`).
 collection.has("key1"); // true
 ```
 
-## hasAllKeys(keys)
+## Collection#hasAllKeys(keys)
 
 Check if all keys exists in the collection.
 
 Parameters :
 
-- keys : The name of the keys to check (Array\<string>).
+- keys : The name of the keys to check (Array\<any>).
 
 Returns :
 
@@ -89,13 +119,13 @@ True if the keys exists in the collection (type : `boolean`).
 collection.hasAllKeys(["key1", "key2"]);
 ```
 
-## hasAnyKey(key)
+## Collection#hasAnyKey(key)
 
 Check if at least one key exists in the collection.
 
 Parameters :
 
-- keys : The name of the keys to check (Array\<string>).
+- keys : The name of the keys to check (Array\<any>).
 
 Returns :
 
@@ -105,13 +135,13 @@ True if one key exists in the collection (type : `boolean`).
 collection.hasAnyKey(["key1", "key2"]);
 ```
 
-## delete(key)
+## Collection#delete(key)
 
 Delete a value from the collection by name of key.
 
 Parameters :
 
-- key : The name of the key to delete from the collection (string).
+- key : The name of the key to delete from the collection (any).
 
 Returns :
 
@@ -121,7 +151,7 @@ True if the key was deleted (type : `boolean`).
 collection.delete("key1");
 ```
 
-## clear()
+## Collection#clear()
 
 Clear all values from the collection.
 
@@ -131,13 +161,13 @@ None
 
 Returns :
 
-Undefined (type : `undefined`).
+Void (type : `void`).
 
 ```js
 collection.clear();
 ```
 
-## updateIf(data, filter)
+## Collection#updateIf(data, filter)
 
 Update value from the collection if the filter returns true for at least one item of collection.
 
@@ -148,38 +178,38 @@ Parameters :
 
 Returns :
 
-The collection if it was updated and null otherwise (type : `null`|`Collection`).
+The collection if it was updated and null otherwise (type : `Collection`| `null`).
 
 ```js
 const filter = (k, v) => k === "key1";
 collection.updateIf({ key: "key1", value: newValue }, filter);
 ```
 
-## deleteIf(key, filter)
+## Collection#deleteIf(key, filter)
 
 Delete value from the collection if the filter returns true for at least one item of collection.
 
 Parameters :
 
-- key : Object with a key and value keys (key of item and newValue).
-- filter : Function with in parameters key and value.
+- key : Object with a key and value keys (key of item and newValue) (any).
+- filter : Function with in parameters key and value (Function).
 
 Returns :
 
-The collection if data was deleted and null otherwise (type : `null`|`Collection`).
+The collection if data was deleted and null otherwise (type : `Collection`| `null`).
 
 ```js
 const filter = (k, v) => k === "key1";
 collection.deleteIf("key1", filter);
 ```
 
-## isUnique(key)
+## Collection#isUnique(key)
 
 Check if in the collection an othen element have the value of item of key.
 
 Parameters :
 
-- key : The name of the key to check (string).
+- key : The name of the key to check (any).
 
 Returns :
 
@@ -189,7 +219,7 @@ True if value of this item is unique in the collection (type : `boolean`).
 collection.isUnique("key1");
 ```
 
-## firstKey()
+## Collection#firstKey()
 
 Get the key of first element of the collection.
 
@@ -199,13 +229,13 @@ None
 
 Returns :
 
-The key of the first element in the collection (type : `any`).
+The key of the first element in the collection (type : `any` | `null`).
 
 ```js
 collection.firstKey();
 ```
 
-## first()
+## Collection#first()
 
 Get the first element of the collection.
 
@@ -215,13 +245,13 @@ None
 
 Returns :
 
-The value of the first element in the collection (type : `any`).
+The value of the first element in the collection (type : `any` | `null`).
 
 ```js
 collection.first();
 ```
 
-## lastKey()
+## Collection#lastKey()
 
 Get the key of last element of the collection.
 
@@ -231,13 +261,13 @@ None
 
 Returns :
 
-The key of the last element in the collection (type : `any`).
+The key of the last element in the collection (type : `any` | `null`).
 
 ```js
 collection.lastKey();
 ```
 
-## last()
+## Collection#last()
 
 Get the last element of the collection.
 
@@ -247,13 +277,13 @@ None
 
 Returns :
 
-The value of the last element in the collection (type : `any`).
+The value of the last element in the collection (type : `any` | `null`).
 
 ```js
 collection.last();
 ```
 
-## randomKey()
+## Collection#randomKey()
 
 Get a random key from the collection.
 
@@ -263,13 +293,13 @@ None
 
 Returns :
 
-The random key of the collection (type : `any`).
+The random key of the collection (type : `any` | `null`).
 
 ```js
 collection.randomKey();
 ```
 
-## random()
+## Collection#random()
 
 Get a random value from the collection.
 
@@ -279,13 +309,13 @@ None
 
 Returns :
 
-The random value of the collection (type : `any`).
+The random value of the collection (type : `any` | `null`).
 
 ```js
 collection.random();
 ```
 
-## find(function)
+## Collection#find(function)
 
 Search value in collection.
 
@@ -295,13 +325,13 @@ Parameters :
 
 Returns :
 
-The value found (type : `any`).
+The value found (type : `any` | `null`).
 
 ```js
 collection.find((v) => v.property == value);
 ```
 
-## isEmpty()
+## Collection#isEmpty()
 
 Check if the collection is empty.
 
@@ -317,7 +347,7 @@ True if the collection is empty (type : `boolean`).
 collection.isEmpty();
 ```
 
-## copy()
+## Collection#copy()
 
 Get a copie of the collection.
 
@@ -333,7 +363,7 @@ The collection copied (type : `Collection`).
 collection.copy();
 ```
 
-## filter(function)
+## Collection#filter(function)
 
 Return the values where the function returns true in the collection.
 
@@ -351,7 +381,7 @@ collection.filter((v, k) => {
 });
 ```
 
-## keysList()
+## Collection#keysList()
 
 Get a list of keys in the collection.
 
@@ -361,13 +391,13 @@ None
 
 Returns :
 
-An arrays of keys of the collection (type : `Array<any>`).
+An arrays of keys of the collection (type : `Array<K>` | `null`).
 
 ```js
 collection.keysList();
 ```
 
-## valuesList()
+## Collection#valuesList()
 
 Get a list of values in the collection.
 
@@ -377,13 +407,13 @@ None
 
 Returns :
 
-An arrays of values of the collection (type : `Array<any>`).
+An arrays of values of the collection (type : `Array<V>` | `null`).
 
 ```js
 collection.valuesList();
 ```
 
-## merge(other)
+## Collection#merge(other)
 
 Merge an other collection or Map with this collection.
 
@@ -399,7 +429,7 @@ The new collection merged (type : `Collection`).
 collection.merge(other);
 ```
 
-## concat(other)
+## Collection#concat(other)
 
 Concat map or collection to this collection.
 
@@ -411,13 +441,13 @@ None
 
 Returns :
 
-Undefined (type : `undefined`)
+The collection (type : `Collection`)
 
 ```js
 collection.concat(other);
 ```
 
-## toArray()
+## Collection#toArray()
 
 Convert the collection to an array.
 
@@ -427,13 +457,13 @@ None
 
 Returns :
 
-An arrays of the collection (type : `Array<{key:string, value:any}>`).
+An arrays of the collection (type : `Array<{key:string, value:any}>` | `null`).
 
 ```js
 collection.toArray();
 ```
 
-## toJSON()
+## Collection#toJSON()
 
 Convert the collection to json.
 
@@ -447,4 +477,20 @@ The collection as json (type : `Object`).
 
 ```js
 collection.toJSON();
+```
+
+## Collection#each(function)
+
+Convert the collection to json.
+
+Parameters :
+
+- function : Function to execute for each element (Function).
+
+Returns :
+
+The collection (type : `Collection`).
+
+```js
+collection.each((v) => console.log(v));
 ```

@@ -3,7 +3,7 @@
  * github.com/Smaug6739/collection
  */
 
-import type { IMap } from './typescript/interfaces';
+import type { IMap, IArray } from './typescript/interfaces';
 export interface CollectionConstructor {
 	new(): Collection<unknown, unknown>;
 	new <K, V>(entries?: ReadonlyArray<readonly [K, V]> | null): Collection<K, V>;
@@ -19,15 +19,15 @@ class Collection<K, V> extends Map<K, V> {
 		super(data)
 	}
 
-	public get(key: K) {
+	public get(key: K): V | undefined {
 		return super.get(key)
 	}
 
-	public set(key: K, value: V) {
+	public set(key: K, value: V): this {
 		return super.set(key, value)
 	}
 
-	public has(key: K) {
+	public has(key: K): boolean {
 		return super.has(key)
 	}
 	public hasAllKeys(keys: K[]): boolean {
@@ -36,15 +36,15 @@ class Collection<K, V> extends Map<K, V> {
 	public hasAnyKey(keys: K[]): boolean {
 		return keys.some((k) => this.has(k));
 	}
-	public delete(key: K) {
+	public delete(key: K): boolean {
 		return super.delete(key)
 	}
 
-	public clear() {
+	public clear(): void {
 		return super.clear()
 	}
 
-	public updateIf(data: IMap, filter: Function) {
+	public updateIf(data: IMap, filter: Function): this | null {
 		if (!data.key || !data.value) throw new TypeError('[MISSING_PARAMETER] The data parameter must be specified with key and value property.');
 		if (!filter) throw new TypeError('[MISSING_PARAMETER] The filter parameter must be specified.');
 		for (const [k, v] of this) {
@@ -54,7 +54,7 @@ class Collection<K, V> extends Map<K, V> {
 		}
 		return null;
 	}
-	public deleteIf(key: K, filter: Function) {
+	public deleteIf(key: K, filter: Function): this | null {
 		if (!key) throw new TypeError('[MISSING_PARAMETER] The key parameter must be specified with key and value property.');
 		if (!filter) throw new TypeError('[MISSING_PARAMETER] The filter parameter must be specified.');
 		for (const [k, v] of this) {
@@ -64,7 +64,7 @@ class Collection<K, V> extends Map<K, V> {
 		}
 		return null;
 	}
-	public isUnique(key: K) {
+	public isUnique(key: K): boolean {
 		const valOne = this.get(key);
 		if (!valOne) throw new TypeError('Cannot find value for key: ' + key);
 		// for (const val of this.filter()) {
@@ -80,7 +80,7 @@ class Collection<K, V> extends Map<K, V> {
 		return null;
 	}
 
-	public first() {
+	public first(): V | null {
 		if (this.values().next().value) return this.values().next().value;
 		return null;
 	}
@@ -90,33 +90,35 @@ class Collection<K, V> extends Map<K, V> {
 		if (arr[arr.length - 1]) return arr[arr.length - 1];
 		return null;
 	}
-	public last() {
+	public last(): V | null {
 		const arr = [...this.values()];
 		if (arr[arr.length - 1]) return arr[arr.length - 1];
 		return null;
 	}
 
-	public randomKey(): K {
+	public randomKey(): K | null {
 		const keys = [...this.keys()];
+		if (!keys.length) return null;
 		const random = Math.floor(Math.random() * keys.length);
 		const key = keys[random];
 		return key
 	}
-	public random() {
+	public random(): V | null {
 		const keys = [...this.keys()];
+		if (!keys.length) return null;
 		const random = Math.floor(Math.random() * keys.length);
 		const key = keys[random];
-		return this.get(key)
+		return this.get(key) || null
 	}
-	public find(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): V | undefined {
+	public find(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): V | null {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) return val;
 		}
-		return undefined;
+		return null;
 	}
 
-	public isEmpty() {
+	public isEmpty(): boolean {
 		const first = this.first();
 		if (!first) return true;
 		return false;
@@ -135,7 +137,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 
-	public keysList() {
+	public keysList(): K[] | null {
 		const list: K[] = [];
 		for (const k of this.keys()) {
 			list.push(k);
@@ -144,7 +146,7 @@ class Collection<K, V> extends Map<K, V> {
 		return null;
 	}
 
-	public valuesList() {
+	public valuesList(): V[] | null {
 		const list: V[] = [];
 		for (const v of this.values()) {
 			list.push(v);
@@ -153,7 +155,7 @@ class Collection<K, V> extends Map<K, V> {
 		return null;
 	}
 
-	public merge(...maps: Array<Collection<K, V> | Map<K, V>>) {
+	public merge(...maps: Array<Collection<K, V> | Map<K, V>>): Collection<K, V> {
 		for (const map of maps) {
 			for (const [k, v] of map) {
 				this.set(k, v)
@@ -162,7 +164,7 @@ class Collection<K, V> extends Map<K, V> {
 		return this;
 	}
 
-	public concat(...maps: Array<Collection<K, V> | Map<K, V>>) {
+	public concat(...maps: Array<Collection<K, V> | Map<K, V>>): Collection<K, V> {
 		const newCollection = this.copy();
 		for (const map of maps) {
 			for (const [k, v] of map) {
@@ -172,11 +174,9 @@ class Collection<K, V> extends Map<K, V> {
 		return newCollection;
 	}
 
-	public toArray() {
+	public toArray(): Array<IArray> | null {
 		const that: this = this;
-		if (that == null) {
-			return that;
-		}
+		if (that == null) return that as null;
 		const newArray = [];
 		for (const [k, v] of that) {
 			newArray.push({
@@ -186,7 +186,7 @@ class Collection<K, V> extends Map<K, V> {
 		}
 		return newArray;
 	}
-	public toJSON() {
+	public toJSON(): any {
 		const obj = Object.fromEntries(this);
 		return obj
 	}
