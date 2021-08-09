@@ -43,7 +43,7 @@ Create a new Collection with optional data has a parameter.
 Parameters :
 
 - data : Array of data to be added to the collection.
-  - type : Array<\Array\<string|number, data>>
+  - type : Array\<Array\<any, data>>
   - optional : Yes
 
 ```js
