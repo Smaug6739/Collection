@@ -131,7 +131,7 @@ class Collection<K, V> extends Map<K, V> {
 	filter(f: Function): Collection<K, V> {
 		const newCollection = new this.constructor[Symbol.species]<K, V>();
 		for (const [k, v] of this) {
-			if (f(v, k)) { newCollection.set(k, v); console.log('OK') }
+			if (f(v, k)) newCollection.set(k, v);
 		}
 		return newCollection;
 	}
