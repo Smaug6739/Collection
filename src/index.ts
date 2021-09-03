@@ -196,4 +196,5 @@ class Collection<K, V> extends Map<K, V> {
 		return this;
 	}
 }
+
 export { Collection }
