@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "build:typing": "tsc --build tsconfig.typing.json"
+    "build:typings": "tsc --build tsconfig.typing.json"
   },
   "repository": {
     "type": "git",
